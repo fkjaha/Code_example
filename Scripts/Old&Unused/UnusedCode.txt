@@ -1,0 +1,139 @@
+﻿        // AddSceneInputListener(gameInputName, (T listenerTarget, Vector3 _) => listenerAction?.Invoke(listenerTarget));
+
+    // public void PlayExecutionAnimation(Transform executionTarget, DeathType deathType)
+    // {
+    //     ExecutionAnimation filteredAnimation = executionAnimations.Find(taskAnimation => taskAnimation.GetSearchKey == deathType);
+    //     if(filteredAnimation == null) return;
+    //     
+    //     Vector3 executionTargetPosition = executionTarget.position;
+    //     gfxTransform.rotation =
+    //         quaternion.LookRotation(executionTargetPosition.Vector3ToFlat() - gfxTransform.position.Vector3ToFlat(),
+    //             Vector3.up);
+    //     animator.Play(filteredAnimation.GetName, default, 0);
+    // }
+
+
+private bool ObjectClicked<T>(out T objectResult)
+    {
+        if (GetRaycastObject().TryGetComponent(out objectResult))
+        {
+            return true;
+        }
+    
+        return false;
+    }
+    
+
+    // private void OnDrawGizmos()
+    // {
+    //     if(eyeTransform == null) return;
+    //     
+    //     Vector3 eyeTransformPosition = eyeTransform.position;
+    //     Vector3 distanceVector = new Vector3(viewDistance, 0f, 0f);
+    //     
+    //     Gizmos.color = radiusColor;
+    //     float angleSegment = 360f / numberOfRenderCircleSegments;
+    //     for (int i = 0; i < numberOfRenderCircleSegments; i++)
+    //     {
+    //         float angleStart = angleSegment * i;
+    //         Vector3 startPosition = distanceVector;
+    //         startPosition = Quaternion.AngleAxis(angleStart, Vector3.up) * startPosition;
+    //         Vector3 endPosition = Quaternion.AngleAxis(angleSegment, Vector3.up) * startPosition;
+    //         Gizmos.DrawLine(eyeTransformPosition + startPosition, eyeTransformPosition + endPosition);
+    //     }
+    //     
+    //     Gizmos.color = angleColor;
+    //     Gizmos.DrawLine(eyeTransformPosition,
+    //         eyeTransformPosition + Quaternion.AngleAxis(viewAngle / 2, Vector3.up) * distanceVector);
+    //     Gizmos.DrawLine(eyeTransformPosition,
+    //         eyeTransformPosition + Quaternion.AngleAxis(-viewAngle / 2, Vector3.up) * distanceVector);
+    // }
+    
+    
+            // headTransform.localRotation = Quaternion.Euler(new Vector3(0f, maxHeadRotation, 0f));
+            // yield return new WaitForSeconds(lookAroundTime / 3);
+            // headTransform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            // yield return new WaitForSeconds(lookAroundTime / 3);
+            // headTransform.localRotation = Quaternion.Euler(new Vector3(0f, -maxHeadRotation, 0f));
+            // yield return new WaitForSeconds(lookAroundTime / 3);
+            // headTransform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            
+    
+    private void CheckPosition(Vector3 position, UnityAction onCompleted = null)
+    {
+        walkController.GoTo(position, onCompleted);
+    }
+    
+    
+public abstract class SelfAction
+    {
+        public float _waitTimeBeforeAction;
+        public float _waitTimeAfterAction;
+        
+        public abstract void Call(UnityAction onCompleted = null);
+    }
+    
+    public abstract class SelfAction<T>: SelfAction
+    {
+        public float _waitTimeBeforeAction;
+        public float _waitTimeAfterAction;
+
+        private T _input;
+        
+        public SelfAction(T input)
+        {
+            _input = input;
+        }
+
+        public abstract override void Call(UnityAction onCompleted = null);
+    }
+
+    public class AnimationSelfAction : SelfAction<string>
+    {
+        public AnimationSelfAction(string input) : base(input) { }
+        
+        public override void Call(UnityAction onCompleted = null)
+        {
+            
+        }
+    }
+    
+    public class GoSelfAction : SelfAction<Vector3>
+    {
+        public GoSelfAction(Vector3 input) : base(input) { }
+
+        public override void Call(UnityAction onCompleted = null)
+        {
+            
+        }
+    }
+    
+    
+    
+    private protected void ChangeInteractionSettings(InteractionSettings interactionSettings)
+    {
+        interactionTag = interactionSettings.GetInteractionTag;
+        req
+    }
+    
+    [Serializable]
+    private protected class InteractionSettings
+    {
+        public string GetInteractionTag => _interactionTag;
+        public bool RequireHoldingBeforeInteract => _requireHoldingBeforeInteract;
+        public bool RequireHoldingToInteract => _requireHoldingToInteract;
+        public float RequiredHoldingTimeBeforeInteract => _requiredHoldTimeBeforeInteract;
+        
+        private string _interactionTag;
+        private bool _requireHoldingBeforeInteract; 
+        private float _requiredHoldTimeBeforeInteract; 
+        private bool _requireHoldingToInteract;
+
+        public InteractionSettings(string interactTag, bool requireHoldBeforeInteract, float requiredHoldTimeBeforeInteract, bool requireHoldToInteract)
+        {
+            _interactionTag = interactTag;
+            _requireHoldingBeforeInteract = requireHoldBeforeInteract;
+            _requiredHoldTimeBeforeInteract = requiredHoldTimeBeforeInteract;
+            _requireHoldingToInteract = requireHoldToInteract;
+        }
+    }    
